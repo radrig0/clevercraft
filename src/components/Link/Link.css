@@ -1,0 +1,9 @@
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: none;
+}
