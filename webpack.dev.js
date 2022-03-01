@@ -56,22 +56,9 @@ module.exports = merge(common, {
       },
       {
         test: /\.css$/,
-        oneOf: [
-          {
-            include: /leaflet/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader'],
-          },
-          {
-            include: /\.global\./,
-            use: [{ loader: MiniCssExtractPlugin.loader, options: { hmr: true } }, 'css-loader'],
-          },
-          {
-            exclude: [/\.global\./, /leaflet/],
-            use: [
-              { loader: MiniCssExtractPlugin.loader, options: { hmr: true } },
-              { loader: 'css-loader', options: { modules: true } },
-            ],
-          },
+        use: [
+          { loader: MiniCssExtractPlugin.loader, options: { hmr: true } },
+          { loader: 'css-loader', options: { modules: true } },
         ],
       },
     ],
