@@ -1,0 +1,57 @@
+{
+  "name": "clevercraft",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "14.18.0"
+  },
+  "dependencies": {
+    "classnames": "2.2.5",
+    "mobx": "5.10.1",
+    "mobx-react": "5.2.3",
+    "mobx-utils": "5.4.1",
+    "react": "16.14.0",
+    "react-dom": "16.8.6"
+  },
+  "devDependencies": {
+    "@types/classnames": "2.2.3",
+    "@types/node": "14.0.4",
+    "@types/react": "16.8.6",
+    "@types/react-dom": "16.8.5",
+    "@types/webpack": "4.4.24",
+    "@typescript-eslint/eslint-plugin": "4.30.0",
+    "@typescript-eslint/parser": "4.30.0",
+    "clean-webpack-plugin": "3.0.0",
+    "copy-webpack-plugin": "6.1.0",
+    "css-loader": "3.5.3",
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-webpack": "0.13.1",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "7.24.0",
+    "file-loader": "6.0.0",
+    "fork-ts-checker-webpack-plugin": "5.2.0",
+    "html-webpack-plugin": "4.3.0",
+    "imagemin-webp": "5.1.0",
+    "mini-css-extract-plugin": "0.9.0",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "prettier": "2.3.2",
+    "react-dev-utils": "10.2.1",
+    "style-loader": "1.2.1",
+    "stylelint": "13.13.1",
+    "stylelint-config-prettier": "8.0.2",
+    "stylelint-config-standard": "22.0.0",
+    "stylelint-prettier": "1.2.0",
+    "stylelint-webpack-plugin": "2.2.2",
+    "ts-loader": "7.0.5",
+    "typescript": "4.4.2",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "5.8.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js"
+  }
+}
