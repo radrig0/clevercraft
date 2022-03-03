@@ -29,14 +29,21 @@ export class EntryList extends React.Component<IProps> {
     );
   }
 
+  private get filteredEntries() {
+    const { vm, entries } = this.props;
+    return vm.filteredTags.size
+      ? entries.filter(entry => [...vm.filteredTags.values()].every(tag => entry.tags.includes(tag)))
+      : entries;
+  }
+
   public render() {
-    const { entries, vm } = this.props;
+    const { vm } = this.props;
     return (
       <React.Fragment>
         {vm.filteredTags.size > 0 && this.tagsRender}
-        {entries.length ? (
+        {this.filteredEntries.length ? (
           <React.Fragment>
-            {entries.map((item: IEntry) => (
+            {this.filteredEntries.map((item: IEntry) => (
               <Entry key={item.id} entry={item} vm={vm} />
             ))}
           </React.Fragment>
