@@ -3,15 +3,11 @@ import React from 'react';
 // @ts-ignore
 import s from '@src/components/EmptyList/EmptyList.css';
 
-interface IProps {
-  index: string;
-}
-
-export class EmptyList extends React.Component<IProps> {
+export class EmptyList extends React.Component {
   public render() {
     return (
       <div className={s.emptyList}>
-        <span>List is empty {this.props.index}</span>
+        <span>List is empty</span>
       </div>
     );
   }

@@ -1,34 +1,76 @@
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { EmptyList } from '@src/components/EmptyList/EmptyList';
 import { Entry, IEntry } from '@src/components/Entry/Entry';
 import { Tabs } from '@src/components/Tabs/Tabs';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as items from '@src/testItems.json';
+import { ViewModel } from '@src/ViewModel';
+
+interface IProps {
+  vm: ViewModel;
+}
 
 interface IState {
   activeTab: string;
 }
 
-const tabs = new Map<string, JSX.Element>();
-tabs.set(`Tab 1 (${0})`, <EmptyList index={'1'} />);
-tabs.set(
-  `Tab 2 (${items.items.length})`,
-  items.items.map((item: IEntry) => <Entry key={item.id} entry={item} />)
-);
-tabs.set(`Tab 3 (${0})`, <EmptyList index={'3'} />);
-
-export class App extends React.Component<{}, IState> {
+@observer
+export class App extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { activeTab: [...tabs.keys()][1] };
+    this.state = { activeTab: this.tabs[0].id };
+    this.props.vm.loadItems();
   }
 
-  public selectTab = (tabName: string) => {
+  private get tabs() {
+    const { toReadBooks, inProgressBooks, doneBooks } = this.props.vm;
+    return [
+      {
+        id: 'toRead',
+        title: `To read (${toReadBooks.length})`,
+        content: toReadBooks.length ? (
+          <React.Fragment>
+            {toReadBooks.map((item: IEntry) => (
+              <Entry key={item.id} entry={item} vm={this.props.vm} />
+            ))}
+          </React.Fragment>
+        ) : (
+          <EmptyList />
+        ),
+      },
+      {
+        id: 'inProgress',
+        title: `In progress (${inProgressBooks.length})`,
+        content: inProgressBooks.length ? (
+          <React.Fragment>
+            {inProgressBooks.map((item: IEntry) => (
+              <Entry key={item.id} entry={item} vm={this.props.vm} />
+            ))}
+          </React.Fragment>
+        ) : (
+          <EmptyList />
+        ),
+      },
+      {
+        id: 'done',
+        title: `Done (${doneBooks.length})`,
+        content: doneBooks.length ? (
+          <React.Fragment>
+            {doneBooks.map((item: IEntry) => (
+              <Entry key={item.id} entry={item} vm={this.props.vm} />
+            ))}
+          </React.Fragment>
+        ) : (
+          <EmptyList />
+        ),
+      },
+    ];
+  }
+
+  private selectTab = (tabName: string) => {
     this.setState({ activeTab: tabName });
   };
 
   public render() {
-    return <Tabs tabs={tabs} activeTab={this.state.activeTab} selectActiveTab={this.selectTab} />;
+    return <Tabs tabs={this.tabs} activeTab={this.state.activeTab} selectActiveTab={this.selectTab} />;
   }
 }

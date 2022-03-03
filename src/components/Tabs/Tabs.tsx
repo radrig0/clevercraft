@@ -4,34 +4,40 @@ import React from 'react';
 // @ts-ignore
 import s from '@src/components/Tabs/Tabs.css';
 
+export interface ITab {
+  id: string;
+  title: string;
+  content: JSX.Element;
+}
+
 interface IProps {
-  tabs: Map<string, JSX.Element>;
+  tabs: ITab[];
   activeTab: string;
   selectActiveTab: (title: string) => void;
 }
 
 export class Tabs extends React.Component<IProps> {
   public render() {
-    const activeTab = this.props.tabs.has(this.props.activeTab) ? this.props.activeTab : this.props.tabs.keys().next();
-
     return (
       <div className={s.wrapper}>
         <div className={s.titles}>
-          {[...this.props.tabs.keys()].map(title => (
+          {this.props.tabs.map(tab => (
             <div
-              className={classNames(s.title, { [s.activeTitle]: title === activeTab })}
-              key={title}
-              onClick={() => this.props.selectActiveTab(title)}
+              className={classNames(s.title, { [s.activeTitle]: tab.id === this.props.activeTab })}
+              key={tab.id}
+              onClick={() => this.props.selectActiveTab(tab.id)}
             >
-              {title}
+              {tab.title}
             </div>
           ))}
         </div>
-        {[...this.props.tabs.keys()].map(title => (
-          <div className={classNames(s.content, { [s.activeContent]: title === activeTab })} key={title}>
-            {this.props.tabs.get(title)}
-          </div>
-        ))}
+        {this.props.tabs.map(tab => {
+          return (
+            <div className={classNames(s.content, { [s.activeContent]: tab.id === this.props.activeTab })} key={tab.id}>
+              {tab.content}
+            </div>
+          );
+        })}
       </div>
     );
   }
