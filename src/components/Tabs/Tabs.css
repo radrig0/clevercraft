@@ -1,5 +1,4 @@
-.tabs {
-  border: solid 1px #999999;
+.wrapper {
   min-height: 500px;
   display: flex;
   flex-direction: column;
@@ -15,12 +14,20 @@
   display: flex;
   flex-grow: 1;
   justify-content: center;
-  padding: 5px 0;
+  padding: 10px 0;
   cursor: pointer;
+  border-top: solid 1px #999999;
+  border-right: solid 1px #999999;
+  border-bottom: solid 1px #999999;
+}
+
+.title:first-child {
+  border-left: solid 1px #999999;
 }
 
 .activeTitle {
   font-weight: bold;
+  border-bottom-color: transparent;
 }
 
 .content {
@@ -29,5 +36,9 @@
 
 .activeContent {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  border-bottom: solid 1px #999999;
+  border-left: solid 1px #999999;
+  border-right: solid 1px #999999;
 }

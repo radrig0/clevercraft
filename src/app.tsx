@@ -9,14 +9,14 @@ interface IState {
 }
 
 const tabs = new Map<string, JSX.Element>();
-tabs.set('tab1', <EmptyList index={'1'} />);
-tabs.set('tab2', <EmptyList index={'2'} />);
-tabs.set('tab3', <EmptyList index={'3'} />);
+tabs.set('Tab 1', <EmptyList index={'1'} />);
+tabs.set('Tab 2', <EmptyList index={'2'} />);
+tabs.set('Tab 3', <EmptyList index={'3'} />);
 
 export class App extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { activeTab: 'tab2' };
+    this.state = { activeTab: [...tabs.keys()][1] };
   }
 
   public selectTab = (tabName: string) => {

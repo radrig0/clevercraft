@@ -15,7 +15,7 @@ export class Tabs extends React.Component<IProps> {
     const activeTab = this.props.tabs.has(this.props.activeTab) ? this.props.activeTab : this.props.tabs.keys().next();
 
     return (
-      <div className={s.tabs}>
+      <div className={s.wrapper}>
         <div className={s.titles}>
           {[...this.props.tabs.keys()].map(title => (
             <div
