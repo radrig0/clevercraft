@@ -1,0 +1,26 @@
+.wrapper {
+  padding: 15px;
+  border-bottom: solid 1px #999999;
+}
+
+.wrapper:last-child {
+  border-bottom: none;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.title {
+  display: flex;
+  flex-grow: 1;
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 10px;
+}
+
+.description {
+  padding: 10px 0 20px;
+}

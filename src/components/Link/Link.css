@@ -1,9 +1,21 @@
-.link {
-  font-weight: 600;
-  text-decoration: underline;
+.wrapper {
+  display: inline-block;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.link:hover {
+.link {
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.wrapper:hover .link {
   text-decoration: none;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: 5px;
 }

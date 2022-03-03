@@ -1,5 +1,6 @@
 .tag {
   display: inline-block;
   background: #dddddd;
-  padding: 3px 5px;
+  padding: 5px;
+  margin-right: 7px;
 }
