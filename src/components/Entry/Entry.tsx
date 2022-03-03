@@ -51,7 +51,7 @@ export class Entry extends React.Component<IProps> {
         <div className={s.description}>{entry.description}</div>
         {entry.tags.length && (
           <div>
-            {entry.tags.map(tag => (
+            {[...new Set(entry.tags)].map(tag => (
               <Tag key={tag} value={tag} onClick={vm.addTag} />
             ))}
           </div>

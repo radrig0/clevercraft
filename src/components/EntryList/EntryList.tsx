@@ -5,6 +5,7 @@ import { Entry, IEntry } from '@src/components/Entry/Entry';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import s from '@src/components/EntryList/EntryList.css';
+import { PlaceHolder } from '@src/components/PlaceHolder/PlaceHolder';
 import { Tag } from '@src/components/Tag/Tag';
 import { ViewModel } from '@src/ViewModel';
 
@@ -38,6 +39,11 @@ export class EntryList extends React.Component<IProps> {
 
   public render() {
     const { vm } = this.props;
+
+    if (vm.loading) {
+      return <PlaceHolder />;
+    }
+
     return (
       <React.Fragment>
         {vm.filteredTags.size > 0 && this.tagsRender}

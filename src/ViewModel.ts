@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { IEntry, Status } from '@src/components/Entry/Entry';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as data from '@src/testItems.json';
+import { ItemsService } from '@src/services/ItemsService';
 
 interface IItem {
   id: string;
@@ -13,12 +13,23 @@ interface IItem {
 }
 
 export class ViewModel {
+  private itemService: ItemsService;
+
+  constructor() {
+    this.itemService = new ItemsService();
+  }
+
+  @observable public loading = false;
   @observable public rawItems: IEntry[] = [];
   @observable public filteredTags: Set<string> = new Set<string>();
 
   @action
   public loadItems() {
-    this.rawItems = data.items.map((item: IItem) => ({ ...item, status: Status.toRead } as IEntry));
+    this.loading = true;
+    this.itemService.loadItems().then(items => {
+      this.loading = false;
+      this.rawItems = items.map((item: IItem) => ({ ...item, status: Status.toRead } as IEntry));
+    });
   }
 
   @computed
