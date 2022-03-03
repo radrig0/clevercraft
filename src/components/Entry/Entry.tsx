@@ -40,7 +40,7 @@ export class Entry extends React.Component<IProps> {
   }
 
   public render() {
-    const { entry } = this.props;
+    const { entry, vm } = this.props;
     return (
       <div className={s.wrapper}>
         <div>{entry.author}</div>
@@ -52,7 +52,7 @@ export class Entry extends React.Component<IProps> {
         {entry.tags.length && (
           <div>
             {entry.tags.map(tag => (
-              <Tag key={tag} value={tag} />
+              <Tag key={tag} value={tag} onClick={vm.addTag} />
             ))}
           </div>
         )}

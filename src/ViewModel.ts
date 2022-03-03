@@ -14,6 +14,7 @@ interface IItem {
 
 export class ViewModel {
   @observable public rawItems: IEntry[] = [];
+  @observable public filteredTags: Set<string> = new Set<string>();
 
   @action
   public loadItems() {
@@ -57,5 +58,20 @@ export class ViewModel {
     if (foundBook && foundBook.status === Status.done) {
       foundBook.status = Status.toRead;
     }
+  }
+
+  @action.bound
+  public addTag(tag: string) {
+    this.filteredTags.add(tag);
+  }
+
+  @action.bound
+  public removeTag(tag: string) {
+    this.filteredTags.delete(tag);
+  }
+
+  @action.bound
+  public clearTags() {
+    this.filteredTags.clear();
   }
 }

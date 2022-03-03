@@ -1,0 +1,16 @@
+.filteredTags {
+  padding: 15px;
+  border-bottom: solid 1px #999999;
+}
+
+.filteredTags *:hover {
+  text-decoration: line-through;
+}
+
+.clearTags {
+  cursor: pointer;
+}
+
+.clearTags:hover {
+  text-decoration: underline;
+}

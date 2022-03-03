@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { EmptyList } from '@src/components/EmptyList/EmptyList';
-import { Entry, IEntry } from '@src/components/Entry/Entry';
+import { EntryList } from '@src/components/EntryList/EntryList';
 import { Tabs } from '@src/components/Tabs/Tabs';
 import { ViewModel } from '@src/ViewModel';
 
@@ -27,41 +26,17 @@ export class App extends React.Component<IProps, IState> {
       {
         id: 'toRead',
         title: `To read (${toReadBooks.length})`,
-        content: toReadBooks.length ? (
-          <React.Fragment>
-            {toReadBooks.map((item: IEntry) => (
-              <Entry key={item.id} entry={item} vm={this.props.vm} />
-            ))}
-          </React.Fragment>
-        ) : (
-          <EmptyList />
-        ),
+        content: <EntryList vm={this.props.vm} entries={toReadBooks} />,
       },
       {
         id: 'inProgress',
         title: `In progress (${inProgressBooks.length})`,
-        content: inProgressBooks.length ? (
-          <React.Fragment>
-            {inProgressBooks.map((item: IEntry) => (
-              <Entry key={item.id} entry={item} vm={this.props.vm} />
-            ))}
-          </React.Fragment>
-        ) : (
-          <EmptyList />
-        ),
+        content: <EntryList vm={this.props.vm} entries={inProgressBooks} />,
       },
       {
         id: 'done',
         title: `Done (${doneBooks.length})`,
-        content: doneBooks.length ? (
-          <React.Fragment>
-            {doneBooks.map((item: IEntry) => (
-              <Entry key={item.id} entry={item} vm={this.props.vm} />
-            ))}
-          </React.Fragment>
-        ) : (
-          <EmptyList />
-        ),
+        content: <EntryList vm={this.props.vm} entries={doneBooks} />,
       },
     ];
   }
