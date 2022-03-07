@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { IEntry, Status } from '@src/components/Entry/Entry';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { ItemsService } from '@src/services/ItemsService';
+import { ItemsService } from '@src/services/ItemsService/ItemsService';
 
 interface IItem {
   id: string;
