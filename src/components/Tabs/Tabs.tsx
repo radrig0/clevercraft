@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import React from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -16,6 +17,7 @@ interface IProps {
   selectActiveTab: (title: string) => void;
 }
 
+@observer
 export class Tabs extends React.Component<IProps> {
   public render() {
     return (

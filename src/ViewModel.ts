@@ -3,6 +3,7 @@ import { IEntry, Status } from '@src/components/Entry/Entry';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { ItemsService } from '@src/services/ItemsService/ItemsService';
+import { RoutingService } from '@src/services/RoutingService/RoutingService';
 
 interface IItem {
   id: string;
@@ -14,14 +15,16 @@ interface IItem {
 
 export class ViewModel {
   private itemService: ItemsService;
+  private routingService: RoutingService;
 
   constructor() {
     this.itemService = new ItemsService();
+    this.routingService = new RoutingService();
   }
 
   @observable public loading = false;
-  @observable public rawItems: IEntry[] = [];
-  @observable public filteredTags: Set<string> = new Set<string>();
+
+  @observable private rawItems: IEntry[] = [];
 
   @action
   public loadItems() {
@@ -71,18 +74,31 @@ export class ViewModel {
     }
   }
 
-  @action.bound
-  public addTag(tag: string) {
-    this.filteredTags.add(tag);
+  @computed
+  public get filteredTags(): Set<string> {
+    return this.routingService.selectedTags;
   }
 
-  @action.bound
-  public removeTag(tag: string) {
-    this.filteredTags.delete(tag);
+  public addTag = (tag: string) => {
+    this.routingService.setTag(tag);
+  };
+
+  public removeTag = (tag: string) => {
+    this.routingService.removeTag(tag);
+  };
+
+  public clearTags = () => {
+    this.routingService.clearTags();
+  };
+
+  @computed
+  public get activeTab() {
+    return this.routingService.currentTab || '';
   }
 
-  @action.bound
-  public clearTags() {
-    this.filteredTags.clear();
-  }
+  public selectTab = (value: string) => {
+    if (value !== this.activeTab) {
+      this.routingService.setTab(value);
+    }
+  };
 }

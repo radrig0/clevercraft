@@ -29,6 +29,7 @@
 .activeTitle {
   font-weight: bold;
   border-bottom-color: transparent;
+  cursor: default;
 }
 
 .content {

@@ -8,15 +8,10 @@ interface IProps {
   vm: ViewModel;
 }
 
-interface IState {
-  activeTab: string;
-}
-
 @observer
-export class App extends React.Component<IProps, IState> {
+export class App extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
-    this.state = { activeTab: this.tabs[0].id };
     this.props.vm.loadItems();
   }
 
@@ -41,11 +36,7 @@ export class App extends React.Component<IProps, IState> {
     ];
   }
 
-  private selectTab = (tabName: string) => {
-    this.setState({ activeTab: tabName });
-  };
-
   public render() {
-    return <Tabs tabs={this.tabs} activeTab={this.state.activeTab} selectActiveTab={this.selectTab} />;
+    return <Tabs tabs={this.tabs} activeTab={this.props.vm.activeTab} selectActiveTab={this.props.vm.selectTab} />;
   }
 }
