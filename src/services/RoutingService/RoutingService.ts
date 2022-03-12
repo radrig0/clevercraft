@@ -52,7 +52,11 @@ export class RoutingService {
     const url = new URL(window.location.href);
     const currentTags = new Set(this.selectedTags);
     currentTags.delete(value);
-    url.searchParams.set(QUERY_PARAMS.TAGS, [...currentTags.values()].join(','));
+    if (currentTags.size) {
+      url.searchParams.set(QUERY_PARAMS.TAGS, [...currentTags.values()].join(','));
+    } else {
+      url.searchParams.delete(QUERY_PARAMS.TAGS);
+    }
     window.history.pushState({}, '', url);
     this.update();
   }
