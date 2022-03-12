@@ -1,5 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import { List, AutoSizer } from 'react-virtualized';
+import { ListRowProps } from 'react-virtualized/dist/es/List';
 import { EmptyList } from '@src/components/EmptyList/EmptyList';
 import { Entry, IEntry } from '@src/components/Entry/Entry';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -8,6 +10,7 @@ import s from '@src/components/EntryList/EntryList.css';
 import { PlaceHolder } from '@src/components/PlaceHolder/PlaceHolder';
 import { Tag } from '@src/components/Tag/Tag';
 import { ViewModel } from '@src/ViewModel';
+import 'react-virtualized/styles.css';
 
 interface IProps {
   vm: ViewModel;
@@ -37,6 +40,10 @@ export class EntryList extends React.Component<IProps> {
       : entries;
   }
 
+  private rowRender = (props: ListRowProps) => {
+    return <Entry {...props} entry={this.filteredEntries[props.index]} vm={this.props.vm} />;
+  };
+
   public render() {
     const { vm } = this.props;
 
@@ -48,11 +55,17 @@ export class EntryList extends React.Component<IProps> {
       <React.Fragment>
         {vm.filteredTags.size > 0 && this.tagsRender}
         {this.filteredEntries.length ? (
-          <React.Fragment>
-            {this.filteredEntries.map((item: IEntry) => (
-              <Entry key={item.id} entry={item} vm={vm} />
-            ))}
-          </React.Fragment>
+          <AutoSizer>
+            {({ height, width }) => (
+              <List
+                width={width}
+                height={height}
+                rowCount={this.filteredEntries.length}
+                rowHeight={50}
+                rowRenderer={this.rowRender}
+              />
+            )}
+          </AutoSizer>
         ) : (
           <EmptyList />
         )}
