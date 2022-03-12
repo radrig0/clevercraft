@@ -19,6 +19,13 @@ interface IProps {
 
 @observer
 export class Tabs extends React.Component<IProps> {
+  public componentDidMount() {
+    const activeTabIsCorrect = this.props.tabs.some(tab => tab.id === this.props.activeTab);
+    if (!activeTabIsCorrect && this.props.tabs.length) {
+      this.props.selectActiveTab(this.props.tabs[0].id);
+    }
+  }
+
   public render() {
     return (
       <div className={s.wrapper}>
