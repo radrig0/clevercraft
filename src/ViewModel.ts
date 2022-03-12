@@ -14,19 +14,20 @@ export class ViewModel {
 
   @observable public loading = false;
 
-  @observable private rawData: Map<string, IEntry> = new Map();
+  @observable private rawData: IEntry[] = [];
 
-  @action
+  @action.bound
   public loadItems() {
     this.loading = true;
     this.itemService.loadItems().then(items => {
-      items.forEach(item => {
-        this.rawData.set(item.id, {
+      console.log('loading complite');
+      this.loading = false;
+      this.rawData = items.map(item => {
+        return {
           ...item,
           status: window.localStorage.getItem(item.id) || Status.toRead,
-        } as IEntry);
+        } as IEntry;
       });
-      this.loading = false;
     });
   }
 
@@ -57,7 +58,7 @@ export class ViewModel {
 
   @action
   public readBook(id: string) {
-    const foundBook = this.rawData.get(id);
+    const foundBook = this.rawData.find(item => item.id === id);
     if (foundBook) {
       foundBook.status = Status.inProgress;
       window.localStorage.setItem(foundBook.id, Status.inProgress);
@@ -66,7 +67,7 @@ export class ViewModel {
 
   @action
   public doneBook(id: string) {
-    const foundBook = this.rawData.get(id);
+    const foundBook = this.rawData.find(item => item.id === id);
     if (foundBook) {
       foundBook.status = Status.done;
       window.localStorage.setItem(foundBook.id, Status.done);
@@ -75,7 +76,7 @@ export class ViewModel {
 
   @action
   public resetBook(id: string) {
-    const foundBook = this.rawData.get(id);
+    const foundBook = this.rawData.find(item => item.id === id);
     if (foundBook) {
       foundBook.status = Status.toRead;
       window.localStorage.removeItem(foundBook.id);
