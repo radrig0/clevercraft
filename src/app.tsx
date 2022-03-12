@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
+import { Status } from '@src/components/Entry/Entry';
 import { EntryList } from '@src/components/EntryList/EntryList';
 import { Tabs } from '@src/components/Tabs/Tabs';
 import { ViewModel } from '@src/ViewModel';
@@ -19,17 +20,17 @@ export class App extends React.Component<IProps> {
     const { toReadBooks, inProgressBooks, doneBooks } = this.props.vm;
     return [
       {
-        id: 'toRead',
+        id: Status.toRead,
         title: `To read (${toReadBooks.length})`,
         content: <EntryList vm={this.props.vm} entries={toReadBooks} />,
       },
       {
-        id: 'inProgress',
+        id: Status.inProgress,
         title: `In progress (${inProgressBooks.length})`,
         content: <EntryList vm={this.props.vm} entries={inProgressBooks} />,
       },
       {
-        id: 'done',
+        id: Status.done,
         title: `Done (${doneBooks.length})`,
         content: <EntryList vm={this.props.vm} entries={doneBooks} />,
       },
