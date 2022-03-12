@@ -45,7 +45,7 @@ export class Entry extends React.Component<IProps> {
           {this.actionLinkRender}
         </div>
         <div className={s.description}>{entry.description}</div>
-        {entry.tags.length && (
+        {Boolean(entry.tags.length) && (
           <div>
             {[...new Set(entry.tags)].map(tag => (
               <Tag key={tag} value={tag} onClick={vm.addTag} />
