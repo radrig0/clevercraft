@@ -4,6 +4,7 @@ import * as React from 'react';
 import s from '@src/components/Entry/Entry.css';
 import { Link } from '@src/components/Link/Link';
 import { Tag } from '@src/components/Tag/Tag';
+import { IItem } from '@src/services/ItemsService/ItemsService';
 import { ViewModel } from '@src/ViewModel';
 
 export enum Status {
@@ -12,12 +13,7 @@ export enum Status {
   done = 'done',
 }
 
-export interface IEntry {
-  id: string;
-  author: string;
-  title: string;
-  description: string;
-  tags: string[];
+export interface IEntry extends IItem {
   status: Status;
 }
 

@@ -3,14 +3,6 @@ import { IEntry, Status } from '@src/components/Entry/Entry';
 import { ItemsService } from '@src/services/ItemsService/ItemsService';
 import { RoutingService } from '@src/services/RoutingService/RoutingService';
 
-interface IItem {
-  id: string;
-  author: string;
-  title: string;
-  description: string;
-  tags: string[];
-}
-
 export class ViewModel {
   private itemService: ItemsService;
   private routingService: RoutingService;
@@ -22,38 +14,51 @@ export class ViewModel {
 
   @observable public loading = false;
 
-  @observable private rawItems: IEntry[] = [];
+  @observable private rawData: Map<string, IEntry> = new Map();
 
   @action
   public loadItems() {
     this.loading = true;
     this.itemService.loadItems().then(items => {
-      this.rawItems = items.map(
-        (item: IItem) => ({ ...item, status: window.localStorage.getItem(item.id) || Status.toRead } as IEntry)
-      );
+      items.forEach(item => {
+        this.rawData.set(item.id, {
+          ...item,
+          status: window.localStorage.getItem(item.id) || Status.toRead,
+        } as IEntry);
+      });
       this.loading = false;
     });
   }
 
+  private filterItem(status: Status) {
+    const result = [];
+    for (const item of this.rawData.values()) {
+      if (item.status === status) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+
   @computed
   public get toReadBooks() {
-    return this.rawItems.filter(item => item.status === Status.toRead) || [];
+    return this.filterItem(Status.toRead);
   }
 
   @computed
   public get inProgressBooks() {
-    return this.rawItems.filter(item => item.status === Status.inProgress) || [];
+    return this.filterItem(Status.inProgress);
   }
 
   @computed
   public get doneBooks() {
-    return this.rawItems.filter(item => item.status === Status.done) || [];
+    return this.filterItem(Status.done);
   }
 
   @action
   public readBook(id: string) {
-    const foundBook = this.rawItems.find(item => item.id === id);
-    if (foundBook && foundBook.status === Status.toRead) {
+    const foundBook = this.rawData.get(id);
+    if (foundBook) {
       foundBook.status = Status.inProgress;
       window.localStorage.setItem(foundBook.id, Status.inProgress);
     }
@@ -61,8 +66,8 @@ export class ViewModel {
 
   @action
   public doneBook(id: string) {
-    const foundBook = this.rawItems.find(item => item.id === id);
-    if (foundBook && foundBook.status === Status.inProgress) {
+    const foundBook = this.rawData.get(id);
+    if (foundBook) {
       foundBook.status = Status.done;
       window.localStorage.setItem(foundBook.id, Status.done);
     }
@@ -70,8 +75,8 @@ export class ViewModel {
 
   @action
   public resetBook(id: string) {
-    const foundBook = this.rawItems.find(item => item.id === id);
-    if (foundBook && foundBook.status === Status.done) {
+    const foundBook = this.rawData.get(id);
+    if (foundBook) {
       foundBook.status = Status.toRead;
       window.localStorage.removeItem(foundBook.id);
     }

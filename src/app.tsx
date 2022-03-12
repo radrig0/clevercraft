@@ -11,8 +11,7 @@ interface IProps {
 
 @observer
 export class App extends React.Component<IProps> {
-  constructor(props: any) {
-    super(props);
+  public componentDidMount() {
     this.props.vm.loadItems();
   }
 
