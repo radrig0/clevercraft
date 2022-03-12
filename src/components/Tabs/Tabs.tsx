@@ -40,13 +40,7 @@ export class Tabs extends React.Component<IProps> {
             </div>
           ))}
         </div>
-        {this.props.tabs.map(tab => {
-          return (
-            <div className={classNames(s.content, { [s.activeContent]: tab.id === this.props.activeTab })} key={tab.id}>
-              {tab.content}
-            </div>
-          );
-        })}
+        <div className={s.content}>{this.props.tabs.find(tab => tab.id === this.props.activeTab)?.content}</div>
       </div>
     );
   }
