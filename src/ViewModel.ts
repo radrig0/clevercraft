@@ -1,7 +1,5 @@
 import { action, computed, observable } from 'mobx';
 import { IEntry, Status } from '@src/components/Entry/Entry';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { ItemsService } from '@src/services/ItemsService/ItemsService';
 import { RoutingService } from '@src/services/RoutingService/RoutingService';
 
@@ -30,8 +28,10 @@ export class ViewModel {
   public loadItems() {
     this.loading = true;
     this.itemService.loadItems().then(items => {
+      this.rawItems = items.map(
+        (item: IItem) => ({ ...item, status: window.localStorage.getItem(item.id) || Status.toRead } as IEntry)
+      );
       this.loading = false;
-      this.rawItems = items.map((item: IItem) => ({ ...item, status: Status.toRead } as IEntry));
     });
   }
 
@@ -55,6 +55,7 @@ export class ViewModel {
     const foundBook = this.rawItems.find(item => item.id === id);
     if (foundBook && foundBook.status === Status.toRead) {
       foundBook.status = Status.inProgress;
+      window.localStorage.setItem(foundBook.id, Status.inProgress);
     }
   }
 
@@ -63,6 +64,7 @@ export class ViewModel {
     const foundBook = this.rawItems.find(item => item.id === id);
     if (foundBook && foundBook.status === Status.inProgress) {
       foundBook.status = Status.done;
+      window.localStorage.setItem(foundBook.id, Status.done);
     }
   }
 
@@ -71,6 +73,7 @@ export class ViewModel {
     const foundBook = this.rawItems.find(item => item.id === id);
     if (foundBook && foundBook.status === Status.done) {
       foundBook.status = Status.toRead;
+      window.localStorage.removeItem(foundBook.id);
     }
   }
 

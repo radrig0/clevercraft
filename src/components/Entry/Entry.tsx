@@ -7,9 +7,9 @@ import { Tag } from '@src/components/Tag/Tag';
 import { ViewModel } from '@src/ViewModel';
 
 export enum Status {
-  toRead,
-  inProgress,
-  done,
+  toRead = 'toRead',
+  inProgress = 'inProgress',
+  done = 'done',
 }
 
 export interface IEntry {
