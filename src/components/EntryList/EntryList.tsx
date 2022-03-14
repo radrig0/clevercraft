@@ -12,6 +12,8 @@ import { Tag } from '@src/components/Tag/Tag';
 import { ViewModel } from '@src/ViewModel';
 import 'react-virtualized/styles.css';
 
+const COUNT_NEED_VIRTUALIZED = 1000;
+
 interface IProps {
   vm: ViewModel;
   entries: IEntry[];
@@ -44,6 +46,26 @@ export class EntryList extends React.Component<IProps> {
     return <Entry {...props} entry={this.filteredEntries[props.index]} vm={this.props.vm} />;
   };
 
+  private get virtualizedRender() {
+    return (
+      <AutoSizer>
+        {({ height, width }) => (
+          <List
+            width={width}
+            height={height}
+            rowCount={this.filteredEntries.length}
+            rowHeight={50}
+            rowRenderer={this.rowRender}
+          />
+        )}
+      </AutoSizer>
+    );
+  }
+
+  private get baseRender() {
+    return this.filteredEntries.map((item: IEntry) => <Entry key={item.id} entry={item} vm={this.props.vm} />);
+  }
+
   public render() {
     const { vm } = this.props;
 
@@ -55,17 +77,11 @@ export class EntryList extends React.Component<IProps> {
       <React.Fragment>
         {vm.filteredTags.size > 0 && this.tagsRender}
         {this.filteredEntries.length ? (
-          <AutoSizer>
-            {({ height, width }) => (
-              <List
-                width={width}
-                height={height}
-                rowCount={this.filteredEntries.length}
-                rowHeight={50}
-                rowRenderer={this.rowRender}
-              />
-            )}
-          </AutoSizer>
+          this.filteredEntries.length > COUNT_NEED_VIRTUALIZED ? (
+            this.virtualizedRender
+          ) : (
+            this.baseRender
+          )
         ) : (
           <EmptyList />
         )}
