@@ -15,4 +15,9 @@ export class ItemsService {
     const { items } = await response.json();
     return items;
   }
+
+  public async loadLocalItems(): Promise<IItem[]> {
+    const response = await import('@src/services/ItemsService/manyTestItems');
+    return response.default.items;
+  }
 }

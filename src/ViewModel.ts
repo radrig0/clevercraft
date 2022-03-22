@@ -19,8 +19,8 @@ export class ViewModel {
   @action.bound
   public loadItems() {
     this.loading = true;
-    this.itemService.loadItems().then(items => {
-      console.log('loading complite');
+    this.itemService.loadLocalItems().then(items => {
+      console.log('loading complete');
       this.loading = false;
       this.rawData = items.map(item => {
         return {
