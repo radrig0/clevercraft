@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { List, AutoSizer } from 'react-virtualized';
+import { AutoSizer, List } from 'react-virtualized';
 import { ListRowProps } from 'react-virtualized/dist/es/List';
 import { EmptyList } from '@src/components/EmptyList/EmptyList';
 import { Entry, IEntry } from '@src/components/Entry/Entry';
@@ -13,7 +13,6 @@ import { ViewModel } from '@src/ViewModel';
 import 'react-virtualized/styles.css';
 
 const COUNT_NEED_VIRTUALIZED = 1000;
-const FIXED_ROW_HEIGHT = 250;
 
 interface IProps {
   vm: ViewModel;
@@ -46,7 +45,7 @@ export class EntryList extends React.Component<IProps> {
   private rowRender = (props: ListRowProps) => {
     if (props.isScrolling) {
       return (
-        <div style={props.style} className={s.scrollingPlaceholder}>
+        <div style={props.style} key={props.key} className={s.scrollingPlaceholder}>
           Scrolling...
         </div>
       );
@@ -57,15 +56,35 @@ export class EntryList extends React.Component<IProps> {
   private get virtualizedRender() {
     return (
       <AutoSizer>
-        {({ height, width }) => (
-          <List
-            width={width}
-            height={height}
-            rowCount={this.filteredEntries.length}
-            rowHeight={FIXED_ROW_HEIGHT}
-            rowRenderer={this.rowRender}
-          />
-        )}
+        {({ height, width }) => {
+          let rowHeight;
+          switch (true) {
+            case width < 650:
+              rowHeight = 250;
+              break;
+
+            case width < 800:
+              rowHeight = 220;
+              break;
+
+            case width < 1160:
+              rowHeight = 200;
+              break;
+
+            default:
+              rowHeight = 180;
+          }
+
+          return (
+            <List
+              width={width}
+              height={height}
+              rowCount={this.filteredEntries.length}
+              rowHeight={rowHeight}
+              rowRenderer={this.rowRender}
+            />
+          );
+        }}
       </AutoSizer>
     );
   }

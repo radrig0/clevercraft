@@ -20,7 +20,6 @@ export class ViewModel {
   public loadItems() {
     this.loading = true;
     this.itemService.loadLocalItems().then(items => {
-      console.log('loading complete');
       this.loading = false;
       this.rawData = items.map(item => {
         return {

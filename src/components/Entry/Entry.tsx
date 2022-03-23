@@ -50,7 +50,7 @@ export class Entry extends React.Component<IProps> {
         {Boolean(entry.tags.length) && (
           <div>
             {[...new Set(entry.tags)].map(tag => (
-              <Tag key={tag} value={tag} onClick={vm.addTag} />
+              <Tag key={tag} value={tag} onClick={vm.addTag} disabled={vm.filteredTags.has(tag)} />
             ))}
           </div>
         )}

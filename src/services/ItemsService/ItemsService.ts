@@ -11,7 +11,7 @@ export class ItemsService {
   private manyItemsUrl = 'https://raw.githubusercontent.com/lastw/test-task/master/data/30000-items.json';
 
   public async loadItems(): Promise<IItem[]> {
-    const response = await fetch(this.manyItemsUrl);
+    const response = await fetch(this.baseItemsUrl);
     const { items } = await response.json();
     return items;
   }

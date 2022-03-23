@@ -5,3 +5,8 @@
   margin-right: 7px;
   cursor: pointer;
 }
+
+.disabled {
+  cursor: default;
+  background: #bbbbbb;
+}
