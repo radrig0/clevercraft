@@ -74,18 +74,20 @@ export class EntryList extends React.Component<IProps> {
     }
 
     return (
-      <React.Fragment>
+      <div className={s.wrapper}>
         {vm.filteredTags.size > 0 && this.tagsRender}
-        {this.filteredEntries.length ? (
-          this.filteredEntries.length > COUNT_NEED_VIRTUALIZED ? (
-            this.virtualizedRender
+        <div className={s.list}>
+          {this.filteredEntries.length ? (
+            this.filteredEntries.length > COUNT_NEED_VIRTUALIZED ? (
+              this.virtualizedRender
+            ) : (
+              this.baseRender
+            )
           ) : (
-            this.baseRender
-          )
-        ) : (
-          <EmptyList />
-        )}
-      </React.Fragment>
+            <EmptyList />
+          )}
+        </div>
+      </div>
     );
   }
 }
