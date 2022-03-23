@@ -6,14 +6,20 @@ export interface IItem {
   tags: string[];
 }
 
-export class ItemsService {
-  private baseItemsUrl = 'https://raw.githubusercontent.com/lastw/test-task/master/data/10-items.json';
-  private manyItemsUrl = 'https://raw.githubusercontent.com/lastw/test-task/master/data/30000-items.json';
+const BASE_ITEMS_URL = 'https://raw.githubusercontent.com/lastw/test-task/master/data/10-items.json';
+const MANY_ITEMS_URL = 'https://raw.githubusercontent.com/lastw/test-task/master/data/30000-items.json';
+const WRONG_ITEMS_URL = 'wrongItemsUrl';
 
+export class ItemsService {
   public async loadItems(): Promise<IItem[]> {
-    const response = await fetch(this.baseItemsUrl);
-    const { items } = await response.json();
-    return items;
+    try {
+      const response = await fetch(MANY_ITEMS_URL);
+      const { items } = await response.json();
+      return items;
+    } catch (e) {
+      alert('Ошибка при загрузке данных!');
+      return [];
+    }
   }
 
   public async loadLocalItems(): Promise<IItem[]> {

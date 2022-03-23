@@ -19,7 +19,7 @@ export class ViewModel {
   @action.bound
   public loadItems() {
     this.loading = true;
-    this.itemService.loadLocalItems().then(items => {
+    this.itemService.loadItems().then(items => {
       this.loading = false;
       this.rawData = items.map(item => {
         return {
