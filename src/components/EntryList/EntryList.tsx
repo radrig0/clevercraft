@@ -13,6 +13,7 @@ import { ViewModel } from '@src/ViewModel';
 import 'react-virtualized/styles.css';
 
 const COUNT_NEED_VIRTUALIZED = 1000;
+const FIXED_ROW_HEIGHT = 250;
 
 interface IProps {
   vm: ViewModel;
@@ -43,7 +44,14 @@ export class EntryList extends React.Component<IProps> {
   }
 
   private rowRender = (props: ListRowProps) => {
-    return <Entry {...props} entry={this.filteredEntries[props.index]} vm={this.props.vm} />;
+    if (props.isScrolling) {
+      return (
+        <div style={props.style} className={s.scrollingPlaceholder}>
+          Scrolling...
+        </div>
+      );
+    }
+    return <Entry key={props.key} entry={this.filteredEntries[props.index]} vm={this.props.vm} style={props.style} />;
   };
 
   private get virtualizedRender() {
@@ -54,7 +62,7 @@ export class EntryList extends React.Component<IProps> {
             width={width}
             height={height}
             rowCount={this.filteredEntries.length}
-            rowHeight={50}
+            rowHeight={FIXED_ROW_HEIGHT}
             rowRenderer={this.rowRender}
           />
         )}

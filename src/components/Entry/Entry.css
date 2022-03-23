@@ -1,6 +1,8 @@
 .wrapper {
   padding: 15px;
   border-bottom: solid 1px #999999;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .wrapper:last-child {

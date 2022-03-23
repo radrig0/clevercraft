@@ -27,3 +27,10 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+
+.scrollingPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 1px #999999;
+}

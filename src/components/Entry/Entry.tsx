@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CSSProperties } from 'react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import s from '@src/components/Entry/Entry.css';
@@ -20,6 +21,7 @@ export interface IEntry extends IItem {
 interface IProps {
   entry: IEntry;
   vm: ViewModel;
+  style?: CSSProperties;
 }
 
 export class Entry extends React.Component<IProps> {
@@ -36,9 +38,9 @@ export class Entry extends React.Component<IProps> {
   }
 
   public render() {
-    const { entry, vm } = this.props;
+    const { entry, vm, style } = this.props;
     return (
-      <div className={s.wrapper}>
+      <div className={s.wrapper} style={style}>
         <div>{entry.author}</div>
         <div className={s.titleWrapper}>
           <div className={s.title}>{entry.title}</div>
